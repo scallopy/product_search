@@ -5,6 +5,7 @@ class TreeNode:
     def __init__(self, value):
         self.value = value
         self.children = []
+        self.products = []
 
     def __repr__(self):
         stack = deque()
@@ -15,11 +16,24 @@ class TreeNode:
 
             if level > 0:
                 level_str += "..." * (level-1) + "├─"
-            level_str += str(node.value)
-            level_str += "\n"
-            level += 1
-            for child in reversed(node.children):
-                stack.append([child, level])
+            if node.value:
+                level_str += str(node.value)
+                level_str += "\n"
+                level += 1
+                for child in reversed(node.children):
+                    stack.append([child, level])
+            if node.products:
+                node.value = "Products:"
+                level_str += "..." * (level-1) + "├─"
+                level_str += str(node.value)
+                level_str += "\n"
+                level += 1
+                for product in node.products:
+                    level_str += "..." * (level-1) + "├─"
+                    level_str += str(product)
+                    level_str += "\n"
+                level += 1
+                # stack.append([, level])
 
         return level_str
 
@@ -41,6 +55,10 @@ class TreeNode:
             current_node = nodes_to_visit.pop()
             print(current_node.value)
             nodes_to_visit += current_node.children
+
+    def add_product(self, name, description, price):
+        self.products.append([name, description, price])
+        print("Adding product" +  str(self.products[-1]) + " to the " + str(self.value))
 
 
 def print_tree(root):
