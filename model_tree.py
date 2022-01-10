@@ -1,4 +1,5 @@
 from collections import deque
+from product_sort import quicksort
 
 
 class TreeNode:
@@ -58,7 +59,9 @@ class TreeNode:
 
     def add_product(self, name, description, price):
         self.products.append([name, description, price])
-        print("Adding product" +  str(self.products[-1]) + " to the " + str(self.value))
+        # print("Adding product" +  str(self.products[-1]) + " to the " + str(self.value))
+        quicksort(self.products, 0, (len(self.products)-1))
+        # print("Sorted products: ", self.products)
 
 
 def print_tree(root):

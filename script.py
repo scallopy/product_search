@@ -21,6 +21,9 @@ hand_tools = TreeNode("Hand Tools")
 tools.add_child(hand_tools)
 hand_tools.add_product("Some", "Something", 121)
 hand_tools.add_product("This", "Thisthing", 12)
+hand_tools.add_product('Mine', 'Description', 23)
+hand_tools.add_product('Asterisks', 'Description', 1222)
+hand_tools.add_product('Nolan', 'Description', 34)
 
 electrical_tools = TreeNode("Electrical Tools")
 tools.add_child(electrical_tools)
@@ -36,8 +39,7 @@ lighting.add_product("Lamp", "lighting", 24)
 print(root_node)
 
 """
-print(root_node.traversal())
-
+print()
 for child in root_node.children:
     if child.products:
         print(child.products)
