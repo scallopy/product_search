@@ -83,8 +83,6 @@ class TreeNode:
         return None
 
 
-
-
 def product_bfs(root_node, goal_value):
 
     # initialize frontier queue
@@ -143,5 +141,3 @@ def quicksort(arr, start, end):
 
     start += 1
     return quicksort(arr, start, end)
-
-
