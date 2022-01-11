@@ -1,7 +1,7 @@
 from model_tree import TreeNode, product_bfs
 
 # Build Tree
-root_node = TreeNode("Stores")
+root_node = TreeNode("Department Store")
 
 hardware_store = TreeNode("Hardware Store")
 souvenirs_store = TreeNode("Souvenirs")
@@ -9,7 +9,7 @@ services = TreeNode("Services")
 
 root_node.add_child(hardware_store)
 root_node.add_child(souvenirs_store)
-souvenirs_store.add_product("Clock", "Old Clock", 56)
+# souvenirs_store.add_product("Clock", "Old Clock", 56)
 root_node.add_child(services)
 
 bath = TreeNode("Bath")
