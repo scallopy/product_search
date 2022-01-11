@@ -1,4 +1,4 @@
-from model_tree import TreeNode
+from model_tree import TreeNode, search_in_products, bfs, dfs
 
 
 root_node = TreeNode("Stores")
@@ -38,21 +38,19 @@ lighting.add_product("Lamp", "lighting", 24)
 
 print(root_node)
 
-"""
+
 print()
-for child in root_node.children:
-    if child.products:
-        print(child.products)
-    else:
-        print(None)
-    for el in child.children:
-        if el.products:
-            print(el.products)
-        else:
-            print(None)
-        for item in el.children:
-            if item.products:
-                print(item.products)
-            else:
-                print(None)
+goal_path = bfs(root_node, "Some")
+print(goal_path)
 """
+if goal_path is None:
+    print("No path found")
+else:
+    print("Path found")
+    path = ''
+    for node in goal_path:
+        path += str(node) + " => "
+    print(path)
+"""
+# new_path = dfs(root_node, "Hand Tools")
+# print("Dfs path: ", new_path)
