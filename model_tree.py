@@ -24,11 +24,11 @@ class TreeNode:
                 for child in reversed(node.children):
                     stack.append([child, level])
             if node.products:
-                node.value = "Products:"
-                level_str += "..." * (level-1) + "├─"
-                level_str += str(node.value)
-                level_str += "\n"
-                level += 1
+                # node.value = "Products:"
+                # level_str += "..." * (level-1) + "├─"
+                # level_str += str(node.value)
+                # level_str += "\n"
+                # level += 1
                 for product in node.products:
                     level_str += "..." * (level-1) + "├─"
                     level_str += str(product)
@@ -123,12 +123,13 @@ def bfs(root_node, goal_value):
         print(f"Searching node with value: {current_node.value}")
 
         # check if the goal node is found
-        if current_node.value == "Products:":
+        if current_node.products:
             print("Current node products: ", current_node.products)
             for product in current_node.products:
                 if product[0] == goal_value:
-                    current_path = product
-                    return "Product found: " + str(current_path)
+                    current_path_node = current_node.value
+                    print(current_path_node)
+                    return ("Product found: " + str(product)), current_path
 
         # add paths to children to the  frontier
         for child in current_node.children:
@@ -147,8 +148,13 @@ def dfs(root, target, path=()):
         return path
 
     for child in root.children:
-        print(child)
         path_found = dfs(child, target, path)
+
+        """
+        for product in child.products:
+            if product[0] == target:
+                path += (product[0],)
+        """
 
         if path_found is not None:
             return path_found

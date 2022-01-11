@@ -1,4 +1,4 @@
-from model_tree import TreeNode, search_in_products, bfs, dfs
+from model_tree import TreeNode, bfs
 
 
 root_node = TreeNode("Stores")
@@ -40,17 +40,18 @@ print(root_node)
 
 
 print()
-goal_path = bfs(root_node, "Some")
-print(goal_path)
-"""
+goal_value, goal_path = bfs(root_node, "Some")
+print(goal_value)
+
 if goal_path is None:
     print("No path found")
 else:
     print("Path found")
-    path = ''
+    path = ""
     for node in goal_path:
-        path += str(node) + " => "
-    print(path)
-"""
-# new_path = dfs(root_node, "Hand Tools")
+        path += node.value + " => "
+    print(path + goal_value)
+
+
+# new_path = dfs(root_node, "Cleaning")
 # print("Dfs path: ", new_path)
