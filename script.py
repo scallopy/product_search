@@ -1,6 +1,6 @@
-from model_tree import TreeNode, bfs
+from model_tree import TreeNode, product_bfs
 
-
+# Build Tree
 root_node = TreeNode("Stores")
 
 hardware_store = TreeNode("Hardware Store")
@@ -36,22 +36,25 @@ lighting = TreeNode("Lighting")
 hardware_store.add_child(lighting)
 lighting.add_product("Lamp", "lighting", 24)
 
+
+print("Many stores and the products in them represented with Tree Node:")
 print(root_node)
 
 
 print()
-goal_value, goal_path = bfs(root_node, "Some")
-print(goal_value)
-
+print("Searching for a product in stores: ")
+print()
+goal_path, goal_value = product_bfs(root_node, "Some")
+print()
 if goal_path is None:
     print("No path found")
 else:
-    print("Path found")
+    print("Product and Path found:")
     path = ""
     for node in goal_path:
         path += node.value + " => "
     print(path + goal_value)
 
-
-# new_path = dfs(root_node, "Cleaning")
-# print("Dfs path: ", new_path)
+print()
+print("Remove product:")
+print(root_node.remove_product("Some"))

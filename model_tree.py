@@ -1,5 +1,5 @@
 from collections import deque
-from product_sort import quicksort
+from random import randrange
 
 
 class TreeNode:
@@ -24,17 +24,11 @@ class TreeNode:
                 for child in reversed(node.children):
                     stack.append([child, level])
             if node.products:
-                # node.value = "Products:"
-                # level_str += "..." * (level-1) + "├─"
-                # level_str += str(node.value)
-                # level_str += "\n"
-                # level += 1
                 for product in node.products:
                     level_str += "..." * (level-1) + "├─"
                     level_str += str(product)
                     level_str += "\n"
                 level += 1
-                # stack.append([, level])
 
         return level_str
 
@@ -63,48 +57,35 @@ class TreeNode:
         quicksort(self.products, 0, (len(self.products)-1))
         # print("Sorted products: ", self.products)
 
+    def remove_product(self, product_name):
+        path_queue = deque()
+        initial_path = [self]
+        path_queue.appendleft(initial_path)
+        while path_queue:
+            current_path = path_queue.pop()
+            current_node = current_path[-1]
 
-def print_tree(root):
-    stack = deque()
-    stack.append([root, 0])
-    level_str = "\n"
-    level = 0
-    while len(stack) > 0:
-        node, level = stack.pop()
+            # check if the goal node is found
+            if current_node.products:
+                for product in current_node.products:
+                    if product[0] == product_name:
+                        print("Current node products: ", current_node.products)
+                        current_node.products.remove(product)
+                        print("Current node products: ", current_node.products)
+                        return "Removed product: " + str(product)
 
-        if level > 0 and len(stack) > 0 and level <= stack[-1][1]:
-            level_str += "..." * (level-1) + "├─"
-        elif level > 0:
-            level_str += "..." + "└─"
-        level_str += str(node.value)
-        level_str += "\n"
-        level += 1
-        for child in node.children:
-            stack.append([child, level])
+            for child in current_node.children:
+                new_path = current_path[:]
+                new_path.append(child)
+                path_queue.appendleft(new_path)
 
-    print(level_str)
-
-
-def print_path(path):
-    # If path is None, no path was found
-    if path is None:
-        print("No paths found!")
-
-    # If a path was found, print path
-    else:
-        print("Path found:")
-        for node in path:
-            print(node.value)
-
-def search_in_products(products, target_value):
-    for idx in range(len(products)):
-        if products[idx][0] == target_value:
-            founded_product = products[idx]
-            return founded_product
-    raise ValueError("{} not in list".format(target_value))
+        # return an empty path if goal not found
+        return None
 
 
-def bfs(root_node, goal_value):
+
+
+def product_bfs(root_node, goal_value):
 
     # initialize frontier queue
     path_queue = deque()
@@ -127,9 +108,7 @@ def bfs(root_node, goal_value):
             print("Current node products: ", current_node.products)
             for product in current_node.products:
                 if product[0] == goal_value:
-                    current_path_node = current_node.value
-                    print(current_path_node)
-                    return ("Product found: " + str(product)), current_path
+                    return current_path, ("Product found: " + str(product))
 
         # add paths to children to the  frontier
         for child in current_node.children:
@@ -141,24 +120,28 @@ def bfs(root_node, goal_value):
     return None
 
 
-def dfs(root, target, path=()):
-    path = path + (root,)
+def quicksort(arr, start, end):
+    count = 0
+    if start >= end:
+        return arr
+    pivot_idx = randrange(start, end)
+    pivot_element = arr[pivot_idx]
 
-    if root.value == target:
-        return path
+    count += 1
+    # print("Pivot element: ", pivot_element)
+    # print("Iterations: ", count)
+    arr[pivot_idx], arr[end] = arr[end], arr[pivot_idx]
+    less_than_pointer = start
+    for idx in range(start, end):
+        if arr[idx][0][0] < pivot_element[0][0]:
+            arr[idx], arr[less_than_pointer] = arr[less_than_pointer], arr[idx]
+            less_than_pointer += 1
 
-    for child in root.children:
-        path_found = dfs(child, target, path)
+    arr[less_than_pointer], arr[end] = arr[end], arr[less_than_pointer]
+    quicksort(arr, start, less_than_pointer - 1)
+    quicksort(arr, less_than_pointer + 1, end)
 
-        """
-        for product in child.products:
-            if product[0] == target:
-                path += (product[0],)
-        """
-
-        if path_found is not None:
-            return path_found
-
-    return None
+    start += 1
+    return quicksort(arr, start, end)
 
 
