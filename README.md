@@ -7,6 +7,8 @@ Build a system of stores with their categories and products.
 
 2.Requirements:
 
+- Python3.8
+
 - In this system we must be able to add and delete a product.
 
 - The user must be able to search for a product by its name, where in stores, and in which category can find this product.
